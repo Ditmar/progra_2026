@@ -1,4 +1,4 @@
-package utils;
+package contact;
 
 public class Contact {
     private String email;
@@ -10,6 +10,11 @@ public class Contact {
         this.name = name;
         this.email = email;
         this.lastName = lastName;
+        this.cel = "-";
+        this.address = "-";
+    }
+    public String getRaw() {
+        return "" + email + "," + name + "," + lastName + "," + address + "," + cel;
     }
     public void print() {
         System.out.println("Name: " + name);

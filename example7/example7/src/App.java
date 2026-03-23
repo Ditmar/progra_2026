@@ -1,12 +1,19 @@
+import java.util.HashMap;
 import java.util.Scanner;
 
-import utils.Contact;
-import utils.ContactManager;
+import contact.Contact;
+import contact.ContactManager;
+import utils.FileManager;
 
 public class App {
     public static void main(String[] args) throws Exception {
+        HashMap<String, Contact> ioLoadData = FileManager.load();
         System.out.println("================= Contact Manager ============== ");
         ContactManager listContacts = new ContactManager();
+        if (ioLoadData != null) {
+            listContacts.setHashMap(ioLoadData);
+        }
+        
         Scanner scanner = new Scanner(System.in);
         String option = null;
         do {
