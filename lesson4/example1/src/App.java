@@ -1,14 +1,13 @@
 import javax.swing.SwingUtilities;
 
-import ui.modules.MainWindow;
-import ui.utils.loader.AssetsLoader;
+import infrastructure.config.ResourceLoader;
+import presentation.login.LoginWindow;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        AssetsLoader loader = new AssetsLoader();
-        loader.loaderFont();
+        ResourceLoader.loadFonts();
         Runnable runable = () -> {
-            MainWindow window = new MainWindow("ventana");
+            LoginWindow window = new LoginWindow("Login Window");
         };
         SwingUtilities.invokeLater(runable);
     }
