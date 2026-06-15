@@ -2,6 +2,7 @@ package presentation.login;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Label;
 
 import presentation.components.Image;
 import presentation.components.TextField;
@@ -12,6 +13,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -30,10 +32,11 @@ public class LoginWindow extends JFrame implements LoginViewContract {
     private TextField nameText;
     private TextField passwordText;
     private JComboBox<Role> comboBox;
+    private JLabel errorLabel;
+    private JButton enterButton;
 
-    public LoginWindow(String title) {
-        super(title);
-        this.title = title;
+    public LoginWindow(LoginPresenterContract presenter) {
+        this.presenter = presenter;
         basicConfig();
     }
 
@@ -79,17 +82,17 @@ public class LoginWindow extends JFrame implements LoginViewContract {
     }
 
     private void setButton() {
-        JButton button = new JButton("Entrar");
-        button.setSize(250, 45);
-        button.setLocation((rightPanel.getWidth() - button.getWidth()) / 2, 500);
-        button.setFocusable(true);
-        button.setForeground(AppColors.secondary);
-        button.setBackground(AppColors.primary);
-        button.setCursor(AppCursors.HAND);
-        button.addActionListener(
+        enterButton = new JButton("Entrar");
+        enterButton.setSize(250, 45);
+        enterButton.setLocation((rightPanel.getWidth() - enterButton.getWidth()) / 2, 500);
+        enterButton.setFocusable(true);
+        enterButton.setForeground(AppColors.secondary);
+        enterButton.setBackground(AppColors.primary);
+        enterButton.setCursor(AppCursors.HAND);
+        enterButton.addActionListener(
                 e -> presenter.onLoginClicked(this.nameText.getText(), this.passwordText.getText(),
                         (Role) this.comboBox.getSelectedItem()));
-        rightPanel.add(button);
+        rightPanel.add(enterButton);
 
     }
 
@@ -136,6 +139,11 @@ public class LoginWindow extends JFrame implements LoginViewContract {
         description.setBounds(200, 200, 150, 40);
         description.setForeground(AppColors.four);
         rightPanel.add(description);
+
+        errorLabel = new JLabel();
+        errorLabel.setBounds(200, 550, 150, 40);
+        errorLabel.setForeground(AppColors.four);
+        rightPanel.add(errorLabel);
     }
 
     private void setContainers() {
@@ -167,19 +175,27 @@ public class LoginWindow extends JFrame implements LoginViewContract {
 
     @Override
     public void showError(String message) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'showError'");
+        errorLabel.setText(message);
     }
 
     @Override
     public void setLoading(Boolean loading) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setLoading'");
+        if (loading) {
+            enterButton.setText("Loading...");
+            enterButton.setCursor(AppCursors.WAIT);
+        } else {
+            enterButton.setText("Entrar");
+            enterButton.setCursor(null);
+        }
     }
 
     @Override
     public void navigateToDashboard(User user) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'navigateToDashboard'");
+        JOptionPane.showMessageDialog(null, "Navegar al Dashboard!");
+    }
+
+    @Override
+    public void clearError() {
+        errorLabel.setText("");
     }
 }
