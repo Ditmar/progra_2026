@@ -6,6 +6,7 @@ import java.awt.Label;
 
 import presentation.components.Image;
 import presentation.components.TextField;
+import presentation.dashboard.DashboardWindow;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -37,10 +38,10 @@ public class LoginWindow extends JFrame implements LoginViewContract {
 
     public LoginWindow(LoginPresenterContract presenter) {
         this.presenter = presenter;
-        basicConfig();
+        build();
     }
 
-    private void basicConfig() {
+    private void build() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(1200, 800);
         this.setLocationRelativeTo(this);
@@ -131,18 +132,18 @@ public class LoginWindow extends JFrame implements LoginViewContract {
 
         JLabel loginTitle = new JLabel("Login");
         loginTitle.setBounds(200, 10, 150, 40);
-        loginTitle.setForeground(AppColors.four);
+        loginTitle.setForeground(AppColors.background);
         loginTitle.setFont(AppFonts.TITLE_H2);
         rightPanel.add(loginTitle);
 
         JLabel description = new JLabel("Recordar credenciales");
         description.setBounds(200, 200, 150, 40);
-        description.setForeground(AppColors.four);
+        description.setForeground(AppColors.background);
         rightPanel.add(description);
 
         errorLabel = new JLabel();
         errorLabel.setBounds(200, 550, 150, 40);
-        errorLabel.setForeground(AppColors.four);
+        errorLabel.setForeground(AppColors.background);
         rightPanel.add(errorLabel);
     }
 
@@ -191,7 +192,8 @@ public class LoginWindow extends JFrame implements LoginViewContract {
 
     @Override
     public void navigateToDashboard(User user) {
-        JOptionPane.showMessageDialog(null, "Navegar al Dashboard!");
+        // JOptionPane.showMessageDialog(null, "Navegar al Dashboard!");
+        DashboardWindow dashboard = new DashboardWindow();
     }
 
     @Override
